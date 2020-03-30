@@ -71,7 +71,7 @@ module.exports = {
     'vue/require-prop-types': 'off',
 
     // Vue template, 未使用的variables (錯誤)
-    'vue/no-unused-vars': 'error',
+    'vue/no-unused-vars': 'warn',
 
     // 不使用 v-html (關閉)
     'vue/no-v-html': 'off',
