@@ -19,13 +19,12 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 export default {
   name: 'DashNav',
   methods: {
-    ...mapMutations({
-      signout: 'auth/signout'
-    })
+    signout() {
+      this.$store.commit('auth/signout', this.user, this.$router)
+    }
   }
 }
 </script>

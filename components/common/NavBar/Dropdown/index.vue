@@ -53,24 +53,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Dropdown',
-  computed: {
-    cart() {
-      return this.$store.state.cart.cart
-    }
-  },
-  created() {
-    this.$store.commit('cart/getCart')
-  },
-  methods: {
-    removeCartItem(id) {
-      this.$store.commit('cart/removeCartItem', id)
-    },
-    toCartPage() {
-      this.$router.push('/cart')
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { cartModule } from '~/store'
+
+@Component
+export default class Dropdown extends Vue {
+  get cart() {
+    return cartModule.cart
+  }
+
+  mounted() {
+    cartModule.getCart()
+  }
+
+  removeCartItem(id: string) {
+    cartModule.removeCartItem(id)
+  }
+
+  toCartPage() {
+    this.$router.push('/cart')
   }
 }
 </script>

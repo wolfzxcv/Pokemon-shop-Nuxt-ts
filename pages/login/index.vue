@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     signin() {
-      this.$store.commit('auth/signin', this.user)
+      this.$store.commit('auth/signin', this.user, this.$router)
     }
   }
 }

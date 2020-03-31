@@ -33,7 +33,7 @@
             <button
               type="button"
               class="btn btn-outline-secondary btn-sm"
-              @click="getProduct(item.id)"
+              @click="goToProduct(item.id)"
             >
               <i
                 v-if="status.loadingItem === item.id"
@@ -79,10 +79,10 @@ export default {
     }
   },
   created() {
-    this.$store.commit('product/setProducts')
+    this.$store.commit('product/getProducts')
   },
   methods: {
-    getProduct(id) {
+    goToProduct(id) {
       this.$router.push(`/product/${id}`)
     },
     addToCart(id, qty = 1) {

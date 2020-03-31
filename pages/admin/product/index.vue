@@ -51,7 +51,7 @@
       </tbody>
     </table>
 
-    <Pagination :pages="pagination" @emitPages="getProducts" />
+    <Pagination :pages="pagination" @emitPages="adminGetProducts" />
 
     <ProductModal />
 
@@ -95,11 +95,11 @@ export default {
     }
   },
   created() {
-    this.$store.commit('admin/getProducts')
+    this.$store.commit('admin/adminGetProducts')
   },
   methods: {
-    getProducts(newPage) {
-      this.$store.commit('admin/getProducts', newPage)
+    adminGetProducts(newPage) {
+      this.$store.commit('admin/adminGetProducts', newPage)
     },
     openProductModal(isNewProduct, item) {
       if (isNewProduct) {

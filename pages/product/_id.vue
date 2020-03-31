@@ -62,7 +62,7 @@ export default {
     }
   },
   created() {
-    this.$store.commit('product/setProduct', this.$route.params.id)
+    this.$store.commit('product/getProduct', this.$route.params.id)
   },
   methods: {
     addToCart(id, qty = 1) {

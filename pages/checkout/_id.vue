@@ -69,11 +69,19 @@ export default {
     }
   },
   created() {
-    this.$store.commit('cart/getCheckoutInfo', this.$route.params.id)
+    this.$store.commit(
+      'cart/getCheckoutInfo',
+      this.$route.params.id,
+      this.$router
+    )
   },
   methods: {
     payOrder() {
-      this.$store.commit('cart/payOrder', this.$route.params.id)
+      this.$store.commit(
+        'cart/payOrder',
+        this.$route.params.id,
+        this.$router
+      )
     }
   }
 }
