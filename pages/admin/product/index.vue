@@ -77,7 +77,11 @@ import DeleteProductModal from '../../../components/admin/product/DeleteProductM
     ProductModal,
     DeleteProductModal
   },
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ['Auth'],
+  meta: {
+    requireAuth: true
+  }
 })
 export default class AdminProduct extends Vue {
   get isLoading() {

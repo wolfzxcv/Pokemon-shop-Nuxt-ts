@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export default async ({ route, redirect }: middlewareProps) => {
-  if (route.meta[0].requiresAuth) {
+  if (route.meta[0].requireAuth) {
+    console.log('this page require auth')
     const api = `${process.env.VUE_APP_PATH}/api/user/check`
     const response = await axios.post<res>(api)
     console.log('check if login', response.data.success)

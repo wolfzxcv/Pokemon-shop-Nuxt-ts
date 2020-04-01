@@ -53,7 +53,7 @@ export default class Admin extends VuexModule {
   setCoupons(data: getCouponsRes) {
     this.coupons = data.coupons
     if (data.success) {
-      paginationModule.pagination = data.pagination
+      paginationModule.setPagination(data.pagination)
     }
   }
 
@@ -61,7 +61,7 @@ export default class Admin extends VuexModule {
   setAdminOrders(data: getOrdersRes) {
     this.adminOrders = data.orders
     if (data.success) {
-      paginationModule.pagination = data.pagination
+      paginationModule.setPagination(data.pagination)
     }
   }
 
@@ -69,7 +69,7 @@ export default class Admin extends VuexModule {
   setAdminProducts(data: adminGetProductsRes) {
     this.adminProducts = data.products
     if (data.success) {
-      paginationModule.pagination = data.pagination
+      paginationModule.setPagination(data.pagination)
     }
   }
 
@@ -134,7 +134,7 @@ export default class Admin extends VuexModule {
   @Action
   async adminGetProducts(page = 1) {
     loadingModule.setLoading(true)
-    const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/products?page=${page}`
+    const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/products?page=${page}`
     const res = await axios.get<adminGetProductsRes>(api)
     console.log('admin/adminGetProducts', res.data)
     this.setAdminProducts(res.data)

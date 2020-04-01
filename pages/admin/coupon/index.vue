@@ -80,7 +80,11 @@ import DelCouponModal from '../../../components/admin/coupon/DeleteCouponModal/i
     CouponModal,
     DelCouponModal
   },
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ['Auth'],
+  meta: {
+    requireAuth: true
+  }
 })
 export default class AdminCoupon extends Vue {
   get isLoading() {

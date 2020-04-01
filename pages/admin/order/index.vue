@@ -54,7 +54,11 @@ import Pagination from '../../../components/common/Pagination/index.vue'
   components: {
     Pagination
   },
-  layout: 'admin'
+  layout: 'admin',
+  middleware: ['Auth'],
+  meta: {
+    requireAuth: true
+  }
 })
 export default class AdminOrder extends Vue {
   get isLoading() {
