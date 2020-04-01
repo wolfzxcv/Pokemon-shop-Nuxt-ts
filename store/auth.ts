@@ -13,7 +13,7 @@ export default class Auth extends VuexModule {
       loginData
     )
     const msg = res.data.message
-    console.log('auth/signin', res.data)
+    console.log('auth/signin', msg)
     if (res.data.success) {
       useRouter.push('/admin/product')
       alertModule.pushMessage({ message: msg })
@@ -26,7 +26,7 @@ export default class Auth extends VuexModule {
       `${process.env.VUE_APP_PATH}/logout`
     )
     const msg = res.data.message
-    console.log('auth/signout', res.data)
+    console.log('auth/signout', msg)
     if (res.data.success) {
       useRouter.push('/login')
       alertModule.pushMessage({ message: msg, status: 'danger' })

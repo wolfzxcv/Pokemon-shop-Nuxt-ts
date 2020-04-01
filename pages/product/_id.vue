@@ -30,7 +30,7 @@
           現在只要 {{ product.price }} 元
         </div>
       </div>
-      <select v-model="product.num" name class="form-control mt-3">
+      <select v-model="num" name class="form-control mt-3">
         <option v-for="num in 10" :key="num" :value="num">
           選購 {{ num }} {{ product.unit }}
         </option>
@@ -39,13 +39,13 @@
     <div class="modal-footer">
       <div class="text-muted text-nowrap mr-3">
         小計
-        <strong>{{ product.num * product.price }}</strong>
+        <strong>{{ num * product.price }}</strong>
         元
       </div>
       <button
         type="button"
         class="btn btn-primary"
-        @click="addToCart(product.id, product.num)"
+        @click="addToCart(product.id, num)"
       >
         加到購物車
       </button>
@@ -59,6 +59,8 @@ import { cartModule, productModule } from '../../store'
 
 @Component
 export default class ProductDetail extends Vue {
+  num: number = 1
+
   get product() {
     return productModule.product
   }

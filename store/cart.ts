@@ -52,7 +52,7 @@ export default class Cart extends VuexModule {
     const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/cart`
     const res = await axios.get<getCartRes>(api)
     this.setCart(res.data.data)
-    console.log('cart/getCart', res.data.data)
+    console.log('cart/getCart')
     loadingModule.setLoading(false)
   }
 
@@ -63,7 +63,7 @@ export default class Cart extends VuexModule {
     const res = await axios.delete<ICommonRes>(api)
     const msg = res.data.message
     alertModule.pushMessage({ message: msg, status: 'danger' })
-    console.log('cart/removeCartItem', res.data)
+    console.log('cart/removeCartItem')
     this.getCart()
   }
 
@@ -78,7 +78,7 @@ export default class Cart extends VuexModule {
     const res = await axios.post<addToCartRes>(api, { data: cart })
     const msg = res.data.message
     alertModule.pushMessage({ message: msg })
-    console.log('cart/addToCart', res.data)
+    console.log('cart/addToCart')
     this.getCart()
   }
 
@@ -98,7 +98,7 @@ export default class Cart extends VuexModule {
     } else {
       alertModule.pushMessage({ message: msg, status: 'danger' })
     }
-    console.log('cart/addCouponCode', res.data)
+    console.log('cart/addCouponCode')
     this.getCart()
   }
 
@@ -117,7 +117,7 @@ export default class Cart extends VuexModule {
       alertModule.pushMessage({ message: msg, status: 'danger' })
       console.log('lacking some guest info')
     }
-    console.log('cart/placeOrder', res.data)
+    console.log('cart/placeOrder')
     loadingModule.setLoading(false)
   }
 
@@ -131,7 +131,7 @@ export default class Cart extends VuexModule {
     } else {
       useRouter.push(`/`)
     }
-    console.log('cart/getCheckoutInfo', routeId)
+    console.log('cart/getCheckoutInfo')
     loadingModule.setLoading(false)
   }
 
@@ -142,6 +142,6 @@ export default class Cart extends VuexModule {
     const msg = res.data.message
     this.getCheckoutInfo({ routeId, useRouter })
     alertModule.pushMessage({ message: msg })
-    console.log('cart/payOrder', res.data)
+    console.log('cart/payOrder')
   }
 }

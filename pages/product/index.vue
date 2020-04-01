@@ -9,7 +9,7 @@
       >
         <div class="card border-0 shadow-sm">
           <div
-            style="height: 150px; background-size: 25%  ; background-position: center; background-repeat: no-repeat "
+            style="height: 180px; background-size: 25%  ; background-position: center; background-repeat: no-repeat "
             :style="{ backgroundImage: `url(${item.imageUrl})` }"
           ></div>
           <div class="card-body">

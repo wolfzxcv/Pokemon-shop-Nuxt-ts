@@ -17,20 +17,7 @@ import AlertMessage from '../components/common/AlertMessage/index.vue'
     AlertMessage
   }
 })
-export default class DefaultLayout extends Vue {
-  head() {
-    return {
-      title: 'Pick up your Pokemon!!!',
-      meta: [
-        {
-          hid: 'description',
-          name: 'index name',
-          content: 'Pick up your Pokemon content!'
-        }
-      ]
-    }
-  }
-}
+export default class DefaultLayout extends Vue {}
 </script>
 
 <style lang="scss">

@@ -1,10 +1,7 @@
 export default {
   mode: 'universal',
-  /*
-   ** Headers of the page
-   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Pick up your Pokemon!!!',
     meta: [
       { charset: 'utf-8' },
       {
@@ -13,57 +10,24 @@ export default {
       },
       {
         hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
+        name: 'index name',
+        content: 'Pick up your Pokemon content!'
       }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-   ** Customize the progress-bar color
-   */
   loading: { color: '#fff' },
-  /*
-   ** Global CSS
-   */
   css: [
     '~/plugins/fontawesome/scss/style.scss',
     '~/plugins/bootstrap/scss/bootstrap.scss'
   ],
-  /*
-   ** Plugins to load before mounting the App
-   */
   plugins: ['./plugins/index.js'],
-  /*
-   ** Nuxt.js dev-modules
-   */
-  buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxt/typescript-build'
-  ],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
-  ],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
+  buildModules: ['@nuxt/typescript-build'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/dotenv'],
   axios: {},
-  /*
-   ** Build configuration
-   */
   build: {
-    /*
-     ** You can extend webpack config here
-     */
     transpile: ['vee-validate/dist/rules']
   },
   env: {

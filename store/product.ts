@@ -36,7 +36,6 @@ export default class Product extends VuexModule {
   @Mutation
   setProduct(product: IProduct) {
     this.product = product
-    this.product.num = 1
   }
 
   @Mutation
@@ -55,7 +54,7 @@ export default class Product extends VuexModule {
     const res = await axios.get<getProductsRes>(
       `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/products/all`
     )
-    console.log('product/getProducts', res.data)
+    console.log('product/getProducts')
 
     this.setProducts(res.data.products)
 
@@ -64,7 +63,7 @@ export default class Product extends VuexModule {
       newCategories.add(item.category)
     })
     this.setCategories(Array.from(newCategories))
-    console.log('categories', this.categories)
+    // console.log('categories', this.categories)
     loadingModule.setLoading(false)
   }
 
@@ -75,7 +74,7 @@ export default class Product extends VuexModule {
       const res = await axios.get<getProductRes>(
         `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/product/${routeId}`
       )
-      console.log('product/getProduct', res.data.product)
+      console.log('product/getProduct')
       this.setProduct(res.data.product)
     } else {
       useRouter.push(`/product`)

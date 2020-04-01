@@ -10,6 +10,7 @@
       <button
         class="btn btn-outline-secondary"
         type="button"
+        :disabled="!coupon_code"
         @click="addCouponCode(coupon_code)"
       >
         Validate
@@ -27,6 +28,7 @@ export default class CouponForm extends Vue {
   coupon_code: string = ''
 
   addCouponCode(couponCode: string) {
+    this.coupon_code = ''
     cartModule.addCouponCode(couponCode)
   }
 }
