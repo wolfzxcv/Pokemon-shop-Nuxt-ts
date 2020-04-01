@@ -53,7 +53,7 @@
     </table>
 
     <!--Coupon code input form-->
-    <CouponForm />
+    <CouponForm v-if="cart.total !== 0" />
     <!--Recipient's information-->
     <RecipientInfo v-if="cart.total !== 0" />
   </div>

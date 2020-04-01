@@ -54,6 +54,7 @@ export default class Cart extends VuexModule {
     this.setCart(res.data.data)
     console.log('cart/getCart')
     loadingModule.setLoading(false)
+    loadingModule.setLoadingItem('')
   }
 
   @Action
@@ -70,6 +71,7 @@ export default class Cart extends VuexModule {
   @Action
   async addToCart({ id, qty = 1 }: addToCart) {
     loadingModule.setLoading(true)
+    loadingModule.setLoadingItem(id)
     const cart = {
       product_id: id,
       qty

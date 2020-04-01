@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" />
     <div class="row mt-4 outer">
       <div
         v-for="item in products"
@@ -35,10 +34,6 @@
               class="btn btn-outline-secondary btn-sm"
               @click="goToProduct(item.id)"
             >
-              <i
-                v-if="loadingItem === item.id"
-                class="fas fa-spinner fa-spin"
-              ></i>
               Read more
             </button>
             <button
@@ -80,7 +75,9 @@ export default class Product extends Vue {
     unit: ''
   }
 
-  loadingItem: string = ''
+  get loadingItem() {
+    return loadingModule.loadingItem
+  }
 
   get isLoading() {
     return loadingModule.isLoading
@@ -99,9 +96,7 @@ export default class Product extends Vue {
   }
 
   addToCart(id: string, qty: number = 1) {
-    this.loadingItem = id
     cartModule.addToCart({ id, qty })
-    this.loadingItem = ''
   }
 }
 </script>

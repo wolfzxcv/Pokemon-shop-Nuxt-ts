@@ -7,7 +7,6 @@ module.exports = {
   parserOptions: {
     parser: '@typescript-eslint/parser'
   },
-
   plugins: ['prettier', '@typescript-eslint'],
   extends: [
     '@nuxtjs/eslint-config-typescript',
@@ -21,7 +20,6 @@ module.exports = {
     gapi: 'readonly',
     grecaptcha: 'readonly'
   },
-  ignorePatterns: ['./plugins/bootstrap/js'],
   rules: {
     'prettier/prettier': 'warn',
     camelcase: 'off',

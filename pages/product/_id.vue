@@ -47,7 +47,11 @@
         class="btn btn-primary"
         @click="addToCart(product.id, num)"
       >
-        加到購物車
+        <i
+          v-if="loadingItem === product.id"
+          class="fas fa-spinner fa-spin"
+        ></i>
+        Add to cart
       </button>
     </div>
   </div>
@@ -55,11 +59,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { cartModule, productModule } from '../../store'
+import { cartModule, loadingModule, productModule } from '../../store'
 
 @Component
 export default class ProductDetail extends Vue {
   num: number = 1
+
+  get loadingItem() {
+    return loadingModule.loadingItem
+  }
 
   get product() {
     return productModule.product

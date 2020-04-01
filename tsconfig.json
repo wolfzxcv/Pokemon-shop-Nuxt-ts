@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext", "esnext.asynciterable", "dom"],
@@ -17,5 +17,5 @@
     },
     "types": ["@types/jquery", "@types/node", "@nuxt/types"]
   },
-  "exclude": ["node_modules", ".nuxt", "dist", "./plugins/bootstrap"]
+  "exclude": ["node_modules", ".nuxt", "dist"]
 }
