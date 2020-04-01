@@ -71,8 +71,9 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: 'DashSide'
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+@Component
+export default class DashSide extends Vue {}
 </script>

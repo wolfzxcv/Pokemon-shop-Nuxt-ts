@@ -36,7 +36,7 @@
               @click="goToProduct(item.id)"
             >
               <i
-                v-if="status.loadingItem === item.id"
+                v-if="loadingItem === item.id"
                 class="fas fa-spinner fa-spin"
               ></i>
               Read more
@@ -47,7 +47,7 @@
               @click="addToCart(item.id)"
             >
               <i
-                v-if="status.loadingItem === item.id"
+                v-if="loadingItem === item.id"
                 class="fas fa-spinner fa-spin"
               ></i>
               Add to cart
@@ -59,38 +59,49 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Product',
-  data() {
-    return {
-      product: {},
-      status: {
-        loadingItem: ''
-      }
-    }
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.loading.isLoading
-    },
-    products() {
-      return this.$store.state.product.products
-    }
-  },
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { IProduct } from 'models/product'
+import { cartModule, loadingModule, productModule } from '../../store'
+
+@Component
+export default class Product extends Vue {
+  product: IProduct = {
+    category: '',
+    content: '',
+    description: '',
+    id: '',
+    imageUrl: '',
+    is_enabled: 1,
+    num: 1,
+    origin_price: '',
+    price: '',
+    title: '',
+    unit: ''
+  }
+
+  loadingItem: string = ''
+
+  get isLoading() {
+    return loadingModule.isLoading
+  }
+
+  get products() {
+    return productModule.products
+  }
+
   created() {
-    this.$store.commit('product/getProducts')
-  },
-  methods: {
-    goToProduct(id) {
-      this.$router.push(`/product/${id}`)
-    },
-    addToCart(id, qty = 1) {
-      this.status.loadingItem = id
-      this.$store.commit('cart/addToCart', { id, qty })
-      // loading effect bug
-      this.status.loadingItem = ''
-    }
+    productModule.getProducts()
+  }
+
+  goToProduct(id: string) {
+    this.$router.push(`/product/${id}`)
+  }
+
+  addToCart(id: string, qty: number = 1) {
+    this.loadingItem = id
+    cartModule.addToCart({ id, qty })
+    this.loadingItem = ''
   }
 }
 </script>

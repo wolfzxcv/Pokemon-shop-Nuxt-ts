@@ -17,7 +17,7 @@ export interface IOrder {
 
 export type addToCart = { id: string; qty: number }
 
-export type placeOrder = { formInfo: object; useRouter: any }
+export type placeOrder = { formInfo: IFormInfo; useRouter: any }
 
 export type routeIdnRouter = { routeId: string; useRouter: any }
 
@@ -62,6 +62,11 @@ type coupon = {
   is_enabled: number
   percent: number
   title: string
+}
+
+export interface IFormInfo {
+  user: user
+  message: string
 }
 
 export type getCartRes = {

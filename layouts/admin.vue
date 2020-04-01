@@ -13,16 +13,20 @@
   </div>
 </template>
 
-<script>
-import DashNav from '../components/admin/DashNav'
-import DashSide from '../components/admin/DashSide'
-import AlertMessage from '~/components/common/AlertMessage'
-export default {
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import DashNav from '../components/admin/DashNav/index.vue'
+import DashSide from '../components/admin/DashSide/index.vue'
+import AlertMessage from '../components/common/AlertMessage/index.vue'
+
+@Component({
   components: {
     DashNav,
     DashSide,
     AlertMessage
-  },
+  }
+})
+export default class AdminLayout extends Vue {
   head() {
     return {
       title: 'Pick up your Pokemon!!!',

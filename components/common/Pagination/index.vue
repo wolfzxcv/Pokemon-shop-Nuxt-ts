@@ -40,17 +40,16 @@
   </nav>
 </template>
 
-<script>
-// :pages="{ 頁碼資訊 }"
-// @emitPages="更新頁面事件"
-export default {
-  name: 'Pagination',
-  props: ['pages'],
-  methods: {
-    updatePage(newPage) {
-      this.$emit('emitPages', newPage)
-      console.log('pagination emit! page=', newPage)
-    }
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+@Component
+export default class Pagination extends Vue {
+  @Prop({ required: true }) readonly pages!: number
+
+  updatePage(newPage: number) {
+    this.$emit('emitPages', newPage)
+    console.log('pagination emit! page=', newPage)
   }
 }
 </script>

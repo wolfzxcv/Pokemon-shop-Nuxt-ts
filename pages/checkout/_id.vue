@@ -60,29 +60,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Checkout',
-  computed: {
-    order() {
-      return this.$store.state.cart.order
-    }
-  },
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { cartModule } from '../../store'
+
+@Component
+export default class Checkout extends Vue {
+  get order() {
+    return cartModule.order
+  }
+
   created() {
-    this.$store.commit(
-      'cart/getCheckoutInfo',
-      this.$route.params.id,
-      this.$router
-    )
-  },
-  methods: {
-    payOrder() {
-      this.$store.commit(
-        'cart/payOrder',
-        this.$route.params.id,
-        this.$router
-      )
-    }
+    const routeId = this.$route.params.id
+    const useRouter = this.$router
+    cartModule.getCheckoutInfo({ routeId, useRouter })
+  }
+
+  payOrder() {
+    const routeId = this.$route.params.id
+    const useRouter = this.$router
+    cartModule.payOrder({ routeId, useRouter })
   }
 }
 </script>

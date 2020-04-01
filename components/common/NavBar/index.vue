@@ -72,10 +72,14 @@
   </nav>
 </template>
 
-<script>
-import Dropdown from './Dropdown'
-export default {
-  name: 'NavBar',
-  components: { Dropdown }
-}
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import Dropdown from './Dropdown/index.vue'
+
+@Component({
+  components: {
+    Dropdown
+  }
+})
+export default class NavBar extends Vue {}
 </script>

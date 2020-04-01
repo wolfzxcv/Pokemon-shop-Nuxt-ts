@@ -53,21 +53,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProductDetail',
-  computed: {
-    product() {
-      return this.$store.state.product.product
-    }
-  },
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { cartModule, productModule } from '../../store'
+
+@Component
+export default class ProductDetail extends Vue {
+  get product() {
+    return productModule.product
+  }
+
   created() {
-    this.$store.commit('product/getProduct', this.$route.params.id)
-  },
-  methods: {
-    addToCart(id, qty = 1) {
-      this.$store.commit('cart/addToCart', { id, qty })
-    }
+    const routeId = this.$route.params.id
+    const useRouter = this.$router
+    productModule.getProduct({ routeId, useRouter })
+  }
+
+  addToCart(id: string, qty: number = 1) {
+    cartModule.addToCart({ id, qty })
   }
 }
 </script>

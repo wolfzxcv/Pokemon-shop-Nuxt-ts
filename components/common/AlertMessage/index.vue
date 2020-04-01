@@ -19,18 +19,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AlertMessage',
-  computed: {
-    messages() {
-      return this.$store.state.alert.messages
-    }
-  },
-  methods: {
-    removeMessage(idx) {
-      this.$store.commit('alert/removeMessage', idx)
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { alertModule } from '../../../store'
+
+@Component
+export default class AlertMessage extends Vue {
+  idx: number = 0
+
+  get messages() {
+    return alertModule.messages
+  }
+
+  removeMessage(idx: number) {
+    alertModule.removeMessage(idx)
   }
 }
 </script>

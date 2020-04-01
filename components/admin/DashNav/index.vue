@@ -18,13 +18,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'DashNav',
-  methods: {
-    signout() {
-      this.$store.commit('auth/signout', this.user, this.$router)
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { authModule } from '../../../store'
+
+@Component
+export default class DashNav extends Vue {
+  signout() {
+    authModule.signout(this.$router)
   }
 }
 </script>

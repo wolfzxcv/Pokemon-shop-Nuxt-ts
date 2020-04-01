@@ -79,7 +79,7 @@ export default class Admin extends VuexModule {
   }
 
   @Action
-  async getCoupons(page = 1) {
+  async getCoupons(page: number = 1) {
     loadingModule.setLoading(true)
     const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupons?page=${page}`
     const res = await axios.get<getCouponsRes>(api)

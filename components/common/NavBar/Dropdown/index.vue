@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { cartModule } from '~/store'
+import { cartModule } from '../../../../store'
 
 @Component
 export default class Dropdown extends Vue {
@@ -63,7 +63,7 @@ export default class Dropdown extends Vue {
     return cartModule.cart
   }
 
-  mounted() {
+  created() {
     cartModule.getCart()
   }
 

@@ -59,62 +59,74 @@
   </div>
 </template>
 
-<script>
-import $ from 'jquery'
-import Pagination from '~/components/common/Pagination'
-import ProductModal from '~/components/admin/product/ProductModal'
-import DeleteProductModal from '~/components/admin/product/DeleteProductModal'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { IProduct } from 'models/product'
+import {
+  adminModule,
+  loadingModule,
+  paginationModule
+} from '../../../store'
+import Pagination from '../../../components/common/Pagination/index.vue'
+import ProductModal from '../../../components/admin/product/ProductModal/index.vue'
+import DeleteProductModal from '../../../components/admin/product/DeleteProductModal/index.vue'
 
-export default {
-  name: 'AdminProduct',
-  middleware: 'Auth',
-  meta: {
-    requiresAuth: true
-  },
-  layout: 'admin',
+@Component({
   components: {
     Pagination,
     ProductModal,
     DeleteProductModal
   },
-  computed: {
-    isLoading() {
-      return this.$store.state.loading.isLoading
-    },
-    isNewProduct() {
-      return this.$store.state.admin.isNewProduct
-    },
-    tempProduct() {
-      return this.$store.state.admin.tempProduct
-    },
-    products() {
-      return this.$store.state.admin.adminProducts
-    },
-    pagination() {
-      return this.$store.state.pagination.pagination
-    }
-  },
+  layout: 'admin',
+  middleware: ['Auth']
+})
+export default class AdminProduct extends Vue {
+  // meta: {
+  //   requiresAuth: true
+  // }
+
+  get isLoading() {
+    return loadingModule.isLoading
+  }
+
+  get isNewProduct() {
+    return adminModule.isNewProduct
+  }
+
+  get tempProduct() {
+    return adminModule.tempProduct
+  }
+
+  get products() {
+    return adminModule.adminProducts
+  }
+
+  get pagination() {
+    return paginationModule.pagination
+  }
+
   created() {
-    this.$store.commit('admin/adminGetProducts')
-  },
-  methods: {
-    adminGetProducts(newPage) {
-      this.$store.commit('admin/adminGetProducts', newPage)
-    },
-    openProductModal(isNewProduct, item) {
-      if (isNewProduct) {
-        this.$store.state.admin.tempProduct = {}
-        this.$store.state.admin.isNewProduct = true
-      } else {
-        this.$store.state.admin.tempProduct = Object.assign({}, item)
-        this.$store.state.admin.isNewProduct = false
-      }
-      $('#dashProductModal').modal('show')
-    },
-    openDeleteProductModal(item) {
-      $('#delProductModal').modal('show')
-      this.$store.state.admin.tempProduct = Object.assign({}, item)
+    adminModule.adminGetProducts()
+  }
+
+  adminGetProducts(newPage: number) {
+    adminModule.adminGetProducts(newPage)
+  }
+
+  openProductModal(isNewProduct: boolean, item: IProduct) {
+    if (isNewProduct) {
+      //  adminModule.tempProduct = {}
+      adminModule.isNewProduct = true
+    } else {
+      adminModule.tempProduct = Object.assign({}, item)
+      adminModule.isNewProduct = false
     }
+    ;($('#dashProductModal') as any).modal('show')
+  }
+
+  openDeleteProductModal(item: IProduct) {
+    ;($('#delProductModal') as any).modal('show')
+    adminModule.tempProduct = Object.assign({}, item)
   }
 }
 </script>

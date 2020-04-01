@@ -24,9 +24,7 @@
         </div>
         <div class="modal-body">
           Are you sure you want to delete
-          <strong class="text-danger">
-            {{ tempProduct.title }}
-          </strong>
+          <strong class="text-danger">{{ tempProduct.title }}</strong>
           ? (Can't recover after deleted)
         </div>
         <div class="modal-footer">
@@ -50,19 +48,19 @@
   </div>
 </template>
 
-<script>
-import $ from 'jquery'
-export default {
-  computed: {
-    tempProduct() {
-      return this.$store.state.admin.tempProduct
-    }
-  },
-  methods: {
-    deleteProduct(id) {
-      this.$store.commit('admin/deleteProduct', id)
-      $('#delProductModal').modal('hide')
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { adminModule } from '../../../../store'
+
+@Component
+export default class DeleteProductModal extends Vue {
+  get tempProduct() {
+    return adminModule.tempProduct
+  }
+
+  deleteProduct(id: string) {
+    adminModule.deleteProduct(id)
+    ;($('#delProductModal') as any).modal('hide')
   }
 }
 </script>

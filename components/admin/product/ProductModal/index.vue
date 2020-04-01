@@ -13,12 +13,7 @@
           <h5 id="exampleModalLabel" class="modal-title">
             <span>Product's detail</span>
           </h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -38,10 +33,7 @@
               <div class="form-group">
                 <label for="customFile">
                   Or Upload image
-                  <i
-                    v-if="status.fileUploading"
-                    class="fas fa-spinner fa-spin"
-                  ></i>
+                  <i v-if="fileIsUploading" class="fas fa-spinner fa-spin"></i>
                 </label>
 
                 <input
@@ -148,55 +140,51 @@
                     :true-value="1"
                     :false-value="0"
                   />
-                  <label class="form-check-label" for="is_enabled">
-                    Enabled
-                  </label>
+                  <label class="form-check-label" for="is_enabled">Enabled</label>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            data-dismiss="modal"
-          >
-            Cancel
-          </button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
           <button
             type="button"
             class="btn btn-outline-primary"
             @click="updateProduct(tempProduct)"
-          >
-            Submit
-          </button>
+          >Submit</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import $ from 'jquery'
-export default {
-  computed: {
-    tempProduct() {
-      return this.$store.state.admin.tempProduct
-    },
-    status() {
-      return this.$store.state.admin.status
-    }
-  },
-  methods: {
-    updateProduct(tempProduct) {
-      this.$store.commit('admin/updateProduct', tempProduct)
-      $('#dashProductModal').modal('hide')
-    },
-    uploadFile() {
-      const uploadedFile = this.$refs.files.files[0]
-      this.$store.commit('admin/uploadFile', uploadedFile)
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { IProduct } from 'models/product'
+import { adminModule } from '../../../../store'
+
+@Component
+export default class ProductModal extends Vue {
+  get tempProduct() {
+    return adminModule.tempProduct
+  }
+
+  get fileIsUploading() {
+    return adminModule.fileIsUploading
+  }
+
+  updateProduct(tempProduct: IProduct) {
+    adminModule.updateProduct(tempProduct)
+    ;($('#dashProductModal') as any).modal('hide')
+  }
+
+  uploadFile() {
+    // const uploadedFile = this.$refs.files.files[0]
+    const uploadedFile = ((this.$refs.files as Vue)
+      .$el as HTMLInputElement).files![0]
+
+    adminModule.uploadFile(uploadedFile)
   }
 }
 </script>

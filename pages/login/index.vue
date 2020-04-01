@@ -36,21 +36,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Login',
-  data() {
-    return {
-      user: {
-        username: '',
-        password: ''
-      }
-    }
-  },
-  methods: {
-    signin() {
-      this.$store.commit('auth/signin', this.user, this.$router)
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { loginData } from 'models/auth'
+import { authModule } from '../../store'
+
+@Component
+export default class Login extends Vue {
+  user: loginData = {
+    username: '',
+    password: ''
+  }
+
+  signin() {
+    const loginData = this.user
+    const useRouter = this.$router
+    authModule.signin({ loginData, useRouter })
   }
 }
 </script>

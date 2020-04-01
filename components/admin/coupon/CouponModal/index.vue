@@ -105,19 +105,20 @@
   </div>
 </template>
 
-<script>
-import $ from 'jquery'
-export default {
-  computed: {
-    tempCoupon() {
-      return this.$store.state.admin.tempCoupon
-    }
-  },
-  methods: {
-    updateCoupon(tempCoupon) {
-      this.$store.commit('admin/updateCoupon', tempCoupon)
-      $('#dashCouponModal').modal('hide')
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { ICoupon } from 'models/admin'
+import { adminModule } from '../../../../store'
+
+@Component
+export default class CouponModal extends Vue {
+  get tempCoupon() {
+    return adminModule.tempCoupon
+  }
+
+  updateCoupon(tempCoupon: ICoupon) {
+    adminModule.updateCoupon(tempCoupon)
+    ;($('#dashCouponModal') as any).modal('hide')
   }
 }
 </script>

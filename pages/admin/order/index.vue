@@ -41,34 +41,44 @@
   </div>
 </template>
 
-<script>
-import Pagination from '~/components/common/Pagination'
-export default {
-  name: 'AdminOrder',
-  middleware: 'Auth',
-  meta: {
-    requiresAuth: true
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import {
+  adminModule,
+  loadingModule,
+  paginationModule
+} from '../../../store'
+import Pagination from '../../../components/common/Pagination/index.vue'
+
+@Component({
+  components: {
+    Pagination
   },
   layout: 'admin',
-  components: { Pagination },
-  computed: {
-    isLoading() {
-      return this.$store.state.loading.isLoading
-    },
-    orders() {
-      return this.$store.state.admin.adminOrders
-    },
-    pagination() {
-      return this.$store.state.pagination.pagination
-    }
-  },
+  middleware: ['Auth']
+})
+export default class AdminOrder extends Vue {
+  // meta: {
+  //   requiresAuth: true
+  // },
+  get isLoading() {
+    return loadingModule.isLoading
+  }
+
+  get orders() {
+    return adminModule.adminOrders
+  }
+
+  get pagination() {
+    return paginationModule.pagination
+  }
+
   created() {
-    this.$store.commit('admin/getOrders')
-  },
-  methods: {
-    getOrders(newPage) {
-      this.$store.commit('admin/getOrders', newPage)
-    }
+    adminModule.getOrders()
+  }
+
+  getOrders(newPage: number) {
+    adminModule.getOrders(newPage)
   }
 }
 </script>

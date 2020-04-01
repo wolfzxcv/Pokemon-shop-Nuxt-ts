@@ -25,6 +25,7 @@ module.exports = {
     gapi: 'readonly',
     grecaptcha: 'readonly'
   },
+  ignorePatterns: ['./plugins/bootstrap/js'],
   rules: {
     /*********************************
      * Prettier 規則

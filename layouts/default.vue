@@ -6,15 +6,18 @@
   </div>
 </template>
 
-<script>
-import NavBar from '~/components/common/NavBar'
-import AlertMessage from '~/components/common/AlertMessage'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import NavBar from '../components/common/NavBar/index.vue'
+import AlertMessage from '../components/common/AlertMessage/index.vue'
 
-export default {
+@Component({
   components: {
     NavBar,
     AlertMessage
-  },
+  }
+})
+export default class DefaultLayout extends Vue {
   head() {
     return {
       title: 'Pick up your Pokemon!!!',

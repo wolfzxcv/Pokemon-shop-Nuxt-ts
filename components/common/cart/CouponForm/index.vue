@@ -18,18 +18,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CouponForm',
-  data() {
-    return {
-      coupon_code: ''
-    }
-  },
-  methods: {
-    addCouponCode(couponCode) {
-      this.$store.commit('cart/addCouponCode', couponCode)
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { cartModule } from '../../../../store'
+
+@Component
+export default class CouponForm extends Vue {
+  coupon_code: string = ''
+
+  addCouponCode(couponCode: string) {
+    cartModule.addCouponCode(couponCode)
   }
 }
 </script>

@@ -59,33 +59,37 @@
   </div>
 </template>
 
-<script>
-import CouponForm from '~/components/common/cart/CouponForm'
-import RecipientInfo from '~/components/common/cart/RecipientInfo'
-export default {
-  name: 'Cart',
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { cartModule, loadingModule } from '../../store'
+import CouponForm from '../../components/common/cart/CouponForm/index.vue'
+import RecipientInfo from '../../components/common/cart/RecipientInfo/index.vue'
+
+@Component({
   components: {
     CouponForm,
     RecipientInfo
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.loading.isLoading
-    },
-    cart() {
-      return this.$store.state.cart.cart
-    }
-  },
+  }
+})
+export default class Cart extends Vue {
+  get isLoading() {
+    return loadingModule.isLoading
+  }
+
+  get cart() {
+    return cartModule.cart
+  }
+
   created() {
-    this.$store.commit('cart/getCart')
-  },
-  methods: {
-    removeCartItem(id) {
-      this.$store.commit('cart/removeCartItem', id)
-    },
-    addCouponCode(couponCode) {
-      this.$store.commit('cart/addCouponCode', couponCode)
-    }
+    cartModule.getCart()
+  }
+
+  removeCartItem(id: string) {
+    cartModule.removeCartItem(id)
+  }
+
+  addCouponCode(couponCode: string) {
+    cartModule.addCouponCode(couponCode)
   }
 }
 </script>

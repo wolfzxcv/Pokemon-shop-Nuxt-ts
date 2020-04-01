@@ -12,7 +12,6 @@ export default class Alert extends VuexModule {
 
   @Mutation
   setMessage({ message, status, timestamp }: IMessage) {
-    // this.messages = [{ message, status, timestamp }]
     if (message) {
       this.messages.push({ message, status, timestamp })
     }
@@ -21,6 +20,15 @@ export default class Alert extends VuexModule {
   @Mutation
   setRemoveMessage(idx: number) {
     this.messages.splice(idx, 1)
+  }
+
+  @Mutation
+  setRemoveMessageWithTiming(timestamp: number) {
+    this.messages.forEach((item: IMessage, i: number) => {
+      if (item.timestamp === timestamp) {
+        this.messages.splice(i, 1)
+      }
+    })
   }
 
   @Action
@@ -40,11 +48,7 @@ export default class Alert extends VuexModule {
   @Action
   removeMessageWithTiming(timestamp: number) {
     setTimeout(() => {
-      this.messages.forEach((item: IMessage, i: number) => {
-        if (item.timestamp === timestamp) {
-          this.messages.splice(i, 1)
-        }
-      })
+      this.setRemoveMessageWithTiming(timestamp)
     }, 5000)
   }
 }

@@ -93,7 +93,11 @@ export default class Cart extends VuexModule {
       data: coupon
     })
     const msg = res.data.message
-    alertModule.pushMessage({ message: msg })
+    if (res.data.success) {
+      alertModule.pushMessage({ message: msg })
+    } else {
+      alertModule.pushMessage({ message: msg, status: 'danger' })
+    }
     console.log('cart/addCouponCode', res.data)
     this.getCart()
   }

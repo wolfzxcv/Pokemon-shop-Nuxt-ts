@@ -62,58 +62,74 @@
   </div>
 </template>
 
-<script>
-import $ from 'jquery'
-import Pagination from '~/components/common/Pagination'
-import CouponModal from '~/components/admin/coupon/CouponModal'
-import DelCouponModal from '~/components/admin/coupon/DeleteCouponModal'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { ICoupon } from 'models/admin'
+import {
+  adminModule,
+  loadingModule,
+  paginationModule
+} from '../../../store'
+import Pagination from '../../../components/common/Pagination/index.vue'
+import CouponModal from '../../../components/admin/coupon/CouponModal/index.vue'
+import DelCouponModal from '../../../components/admin/coupon/DeleteCouponModal/index.vue'
 
-export default {
-  name: 'AdminCoupon',
-  middleware: 'Auth',
-  meta: {
-    requiresAuth: true
+@Component({
+  components: {
+    Pagination,
+    CouponModal,
+    DelCouponModal
   },
   layout: 'admin',
-  components: { Pagination, CouponModal, DelCouponModal },
-  computed: {
-    isLoading() {
-      return this.$store.state.loading.isLoading
-    },
-    isNewCoupon() {
-      return this.$store.state.admin.isNewCoupon
-    },
-    tempCoupon() {
-      return this.$store.state.admin.tempCoupon
-    },
-    coupons() {
-      return this.$store.state.admin.coupons
-    },
-    pagination() {
-      return this.$store.state.pagination.pagination
-    }
-  },
+  middleware: ['Auth']
+})
+export default class AdminCoupon extends Vue {
+  // meta: {
+  //   requiresAuth: true
+  // }
+
+  get isLoading() {
+    return loadingModule.isLoading
+  }
+
+  get isNewCoupon() {
+    return adminModule.isNewCoupon
+  }
+
+  get tempCoupon() {
+    return adminModule.tempCoupon
+  }
+
+  get coupons() {
+    return adminModule.coupons
+  }
+
+  get pagination() {
+    return paginationModule.pagination
+  }
+
   created() {
-    this.$store.commit('admin/getCoupons')
-  },
-  methods: {
-    getCoupons(newPage) {
-      this.$store.commit('admin/getCoupons', newPage)
-    },
-    openCouponModal(isNewCoupon, item) {
-      if (isNewCoupon) {
-        this.$store.state.admin.tempCoupon = {}
-        this.$store.state.admin.isNewCoupon = true
-      } else {
-        this.$store.state.admin.tempCoupon = Object.assign({}, item)
-        this.$store.state.admin.isNewCoupon = false
-      }
-      $('#dashCouponModal').modal('show')
-    },
-    openDeleteCouponModal(item) {
-      $('#delCouponModal').modal('show')
-      this.$store.state.admin.tempCoupon = Object.assign({}, item)
+    adminModule.getCoupons()
+  }
+
+  getCoupons(newPage: number) {
+    adminModule.getCoupons(newPage)
+  }
+
+  openCouponModal(isNewCoupon: boolean, item: ICoupon) {
+    if (isNewCoupon) {
+      // adminModule.tempCoupon = {}
+      adminModule.isNewCoupon = true
+    } else {
+      adminModule.tempCoupon = Object.assign({}, item)
+      adminModule.isNewCoupon = false
     }
+    ;($('#dashCouponModal') as any).modal('show')
+  }
+
+  openDeleteCouponModal(item: ICoupon) {
+    ;($('#delCouponModal') as any).modal('show')
+    adminModule.tempCoupon = Object.assign({}, item)
   }
 }
 </script>

@@ -93,26 +93,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'RecipientInfo',
-  data() {
-    return {
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: ''
-        },
-        message: ''
-      }
-    }
-  },
-  methods: {
-    placeOrder(formInfo) {
-      this.$store.commit('cart/placeOrder', formInfo)
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import { IFormInfo } from 'models/cart'
+import { cartModule } from '../../../../store'
+
+@Component
+export default class RecipientInfo extends Vue {
+  form: IFormInfo = {
+    user: {
+      name: '',
+      email: '',
+      tel: '',
+      address: ''
+    },
+    message: ''
+  }
+
+  placeOrder(formInfo: IFormInfo) {
+    const useRouter = this.$router
+    cartModule.placeOrder({ formInfo, useRouter })
   }
 }
 </script>
