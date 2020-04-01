@@ -49,7 +49,6 @@ export default class Pagination extends Vue {
 
   updatePage(newPage: number) {
     this.$emit('emitPages', newPage)
-    console.log('pagination emit! page=', newPage)
   }
 }
 </script>

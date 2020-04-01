@@ -63,6 +63,7 @@
 </template>
 
 <script lang="ts">
+import $ from 'jquery'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { ICoupon } from 'models/admin'
 import {
@@ -117,18 +118,26 @@ export default class AdminCoupon extends Vue {
 
   openCouponModal(isNewCoupon: boolean, item: ICoupon) {
     if (isNewCoupon) {
-      // adminModule.tempCoupon = {}
-      adminModule.isNewCoupon = true
+      const newTempCoupon: ICoupon = {
+        code: '',
+        due_date: '',
+        id: '',
+        is_enabled: 0,
+        percent: '',
+        title: ''
+      }
+      adminModule.setTempCoupon(newTempCoupon)
+      adminModule.setIsNewCoupon(true)
     } else {
-      adminModule.tempCoupon = Object.assign({}, item)
-      adminModule.isNewCoupon = false
+      adminModule.setTempCoupon(item)
+      adminModule.setIsNewCoupon(false)
     }
     ;($('#dashCouponModal') as any).modal('show')
   }
 
   openDeleteCouponModal(item: ICoupon) {
     ;($('#delCouponModal') as any).modal('show')
-    adminModule.tempCoupon = Object.assign({}, item)
+    adminModule.setTempCoupon(item)
   }
 }
 </script>

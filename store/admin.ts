@@ -50,6 +50,26 @@ export default class Admin extends VuexModule {
   fileIsUploading: boolean = false
 
   @Mutation
+  setIsNewCoupon(isNewCoupon: boolean) {
+    this.isNewCoupon = isNewCoupon
+  }
+
+  @Mutation
+  setTempCoupon(item: ICoupon) {
+    this.tempCoupon = item
+  }
+
+  @Mutation
+  setIsNewProduct(isNewProduct: boolean) {
+    this.isNewProduct = isNewProduct
+  }
+
+  @Mutation
+  setTempProduct(item: IProduct) {
+    this.tempProduct = item
+  }
+
+  @Mutation
   setCoupons(data: getCouponsRes) {
     this.coupons = data.coupons
     if (data.success) {
@@ -84,7 +104,7 @@ export default class Admin extends VuexModule {
     const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupons?page=${page}`
     const res = await axios.get<getCouponsRes>(api)
     this.setCoupons(res.data)
-    console.log('admin/getCoupons', res.data)
+    console.log('admin/getCoupons')
     loadingModule.setLoading(false)
   }
 
@@ -95,7 +115,7 @@ export default class Admin extends VuexModule {
     const res = await axios.delete<ICommonRes>(api)
     const msg = res.data.message
     alertModule.pushMessage({ message: msg })
-    console.log('admin/deleteCoupon', res.data)
+    console.log('admin/deleteCoupon')
     this.getCoupons()
   }
 
@@ -127,7 +147,7 @@ export default class Admin extends VuexModule {
     const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/orders?page=${page}`
     const res = await axios.get<getOrdersRes>(api)
     this.setAdminOrders(res.data)
-    console.log('admin/getOrders', res.data)
+    console.log('admin/getOrders')
     loadingModule.setLoading(false)
   }
 
@@ -136,7 +156,7 @@ export default class Admin extends VuexModule {
     loadingModule.setLoading(true)
     const api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/products?page=${page}`
     const res = await axios.get<adminGetProductsRes>(api)
-    console.log('admin/adminGetProducts', res.data)
+    console.log('admin/adminGetProducts')
     this.setAdminProducts(res.data)
     loadingModule.setLoading(false)
   }
@@ -149,7 +169,7 @@ export default class Admin extends VuexModule {
     )
     const msg = res.data.message
     alertModule.pushMessage({ message: msg })
-    console.log('admin/deleteProduct', res.data)
+    console.log('admin/deleteProduct')
     this.adminGetProducts()
   }
 

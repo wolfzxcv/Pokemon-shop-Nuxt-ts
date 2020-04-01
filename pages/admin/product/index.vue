@@ -60,6 +60,7 @@
 </template>
 
 <script lang="ts">
+import $ from 'jquery'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { IProduct } from 'models/product'
 import {
@@ -114,18 +115,31 @@ export default class AdminProduct extends Vue {
 
   openProductModal(isNewProduct: boolean, item: IProduct) {
     if (isNewProduct) {
-      //  adminModule.tempProduct = {}
-      adminModule.isNewProduct = true
+      const newTempProduct: IProduct = {
+        category: '',
+        content: '',
+        description: '',
+        id: '',
+        imageUrl: '',
+        is_enabled: 1,
+        num: 1,
+        origin_price: '',
+        price: '',
+        title: '',
+        unit: ''
+      }
+      adminModule.setTempProduct(newTempProduct)
+      adminModule.setIsNewProduct(true)
     } else {
-      adminModule.tempProduct = Object.assign({}, item)
-      adminModule.isNewProduct = false
+      adminModule.setTempProduct(item)
+      adminModule.setIsNewProduct(false)
     }
     ;($('#dashProductModal') as any).modal('show')
   }
 
   openDeleteProductModal(item: IProduct) {
     ;($('#delProductModal') as any).modal('show')
-    adminModule.tempProduct = Object.assign({}, item)
+    adminModule.setTempProduct(item)
   }
 }
 </script>

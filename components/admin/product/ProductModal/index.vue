@@ -178,6 +178,7 @@
 </template>
 
 <script lang="ts">
+import $ from 'jquery'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { IProduct } from 'models/product'
 import { adminModule } from '../../../../store'

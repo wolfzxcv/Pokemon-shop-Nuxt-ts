@@ -49,6 +49,7 @@
 </template>
 
 <script lang="ts">
+import $ from 'jquery'
 import { Component, Vue } from 'nuxt-property-decorator'
 import { adminModule } from '../../../../store'
 
