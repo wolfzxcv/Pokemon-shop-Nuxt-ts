@@ -172,13 +172,14 @@ export default class Admin extends VuexModule {
 
     if (res.data.success) {
       alertModule.pushMessage({ message: '圖片上傳成功' })
+      this.setImageUrl(res.data.imageUrl!)
+      console.log(this.imageUrl)
     } else {
       alertModule.pushMessage({
         message: '圖片上傳失敗',
         status: 'danger'
       })
     }
-    this.setImageUrl(res.data.imageUrl!)
     console.log('admin/uploadFile')
     this.setFileIsUploading(false)
   }
