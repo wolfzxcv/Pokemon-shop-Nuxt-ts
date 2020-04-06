@@ -24,7 +24,7 @@
         </div>
         <div class="modal-body">
           Are you sure you want to delete
-          <strong class="text-danger">{{ tempCoupon.title }}</strong>
+          <strong class="text-danger">{{ del.title }}</strong>
           ? (Can't recover after deleted)
         </div>
         <div class="modal-footer">
@@ -38,7 +38,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click="deleteCoupon(tempCoupon.id)"
+            @click="deleteCoupon(del.id)"
           >
             Confirm deletion
           </button>
@@ -50,13 +50,14 @@
 
 <script lang="ts">
 import $ from 'jquery'
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { adminModule } from '../../../../store'
 
 @Component
 export default class DeleteCouponModal extends Vue {
-  get tempCoupon() {
-    return adminModule.tempCoupon
+  @Prop({ required: true }) readonly del!: {
+    id: string
+    title: string
   }
 
   deleteCoupon(id: string) {

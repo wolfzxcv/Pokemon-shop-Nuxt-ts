@@ -57,7 +57,7 @@
 
     <ProductModal :product="localProduct" />
 
-    <DeleteProductModal />
+    <DeleteProductModal :del="deleteProduct" />
   </div>
 </template>
 
@@ -107,6 +107,8 @@ export default class AdminProduct extends Vue {
     adminModule.adminGetProducts(newPage)
   }
 
+  deleteProduct: { id: string; title: string } = { id: '', title: '' }
+
   localProduct: IProduct = {
     category: '',
     content: '',
@@ -145,7 +147,7 @@ export default class AdminProduct extends Vue {
 
   openDeleteProductModal(item: IProduct) {
     ;($('#delProductModal') as any).modal('show')
-    adminModule.setTempProduct(item)
+    this.deleteProduct = { id: item.id, title: item.title }
   }
 }
 </script>

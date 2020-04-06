@@ -46,7 +46,6 @@
 
                 <input
                   id="customFile"
-                  ref="files"
                   type="file"
                   class="form-control"
                   @change="uploadFile"
@@ -196,10 +195,8 @@ export default class ProductModal extends Vue {
     ;($('#dashProductModal') as any).modal('hide')
   }
 
-  uploadFile() {
-    const uploadedFile = ((this.$refs.files as Vue)
-      .$el as HTMLInputElement).files![0]
-
+  uploadFile(e: any) {
+    const uploadedFile = (e.target as HTMLInputElement).files![0]
     adminModule.uploadFile(uploadedFile)
   }
 }

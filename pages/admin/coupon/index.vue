@@ -60,7 +60,7 @@
 
     <CouponModal :coupon="localCoupon" />
 
-    <DelCouponModal />
+    <DelCouponModal :del="deleteCoupon" />
   </div>
 </template>
 
@@ -110,6 +110,8 @@ export default class AdminCoupon extends Vue {
     adminModule.getCoupons(newPage)
   }
 
+  deleteCoupon: { id: string; title: string } = { id: '', title: '' }
+
   localCoupon: ICoupon = {
     code: '',
     due_date: '',
@@ -139,7 +141,7 @@ export default class AdminCoupon extends Vue {
 
   openDeleteCouponModal(item: ICoupon) {
     ;($('#delCouponModal') as any).modal('show')
-    adminModule.setTempCoupon(item)
+    this.deleteCoupon = { id: item.id, title: item.title }
   }
 }
 </script>

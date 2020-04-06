@@ -48,16 +48,6 @@ export default class Admin extends VuexModule {
   fileIsUploading: boolean = false
 
   @Mutation
-  setTempCoupon(item: ICoupon) {
-    this.tempCoupon = item
-  }
-
-  @Mutation
-  setTempProduct(item: IProduct) {
-    this.tempProduct = item
-  }
-
-  @Mutation
   setCoupons(data: getCouponsRes) {
     this.coupons = data.coupons
     if (data.success) {
@@ -81,9 +71,14 @@ export default class Admin extends VuexModule {
     }
   }
 
+  // @Mutation
+  // setImageUrl(url: string) {
+  //   this.tempProduct.imageUrl = url
+  // }
+
   @Mutation
-  setImageUrl(url: string) {
-    this.tempProduct.imageUrl = url
+  setFileIsUploading(isUploading: boolean) {
+    this.fileIsUploading = isUploading
   }
 
   @Action
@@ -186,7 +181,7 @@ export default class Admin extends VuexModule {
 
   @Action
   async uploadFile(uploadedFile: File) {
-    this.fileIsUploading = true
+    this.setFileIsUploading(true)
     const formData = new FormData()
     formData.append('file-to-upload', uploadedFile)
     const url = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/upload`
@@ -197,7 +192,8 @@ export default class Admin extends VuexModule {
     })
 
     if (res.data.success) {
-      this.setImageUrl(res.data.imageUrl as string)
+      console.log('upload success, url= ', res.data.imageUrl)
+      // this.setImageUrl(res.data.imageUrl as string)
       alertModule.pushMessage({ message: 'Upload success' })
     } else {
       alertModule.pushMessage({
@@ -206,6 +202,6 @@ export default class Admin extends VuexModule {
       })
     }
     console.log('admin/uploadFile', res.data)
-    this.fileIsUploading = false
+    this.setFileIsUploading(false)
   }
 }
