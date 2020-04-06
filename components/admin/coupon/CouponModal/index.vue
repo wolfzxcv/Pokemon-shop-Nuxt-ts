@@ -28,7 +28,7 @@
               <label for="title">Coupon Name</label>
               <input
                 id="title"
-                v-model="tempCoupon.title"
+                v-model="coupon.title"
                 type="text"
                 class="form-control"
                 placeholder="Please enter coupon name"
@@ -39,7 +39,7 @@
                 <label for="code">Coupon code</label>
                 <input
                   id="code"
-                  v-model="tempCoupon.code"
+                  v-model="coupon.code"
                   type="text"
                   class="form-control"
                   placeholder="Please enter coupon code"
@@ -49,7 +49,7 @@
                 <label for="percentage">Percentage</label>
                 <input
                   id="percentage"
-                  v-model="tempCoupon.percent"
+                  v-model="coupon.percent"
                   type="number"
                   class="form-control"
                   placeholder="Please enter percentage"
@@ -60,7 +60,7 @@
               <label for="timestamp">Expiration date</label>
               <input
                 id="timestamp"
-                v-model="tempCoupon.due_date"
+                v-model="coupon.due_date"
                 type="text"
                 class="form-control"
                 placeholder="Please enter an expiration date in timestamp formate"
@@ -71,7 +71,7 @@
               <div class="form-check">
                 <input
                   id="is_enabled"
-                  v-model="tempCoupon.is_enabled"
+                  v-model="coupon.is_enabled"
                   class="form-check-input"
                   type="checkbox"
                   :true-value="1"
@@ -95,7 +95,7 @@
           <button
             type="button"
             class="btn btn-outline-primary"
-            @click="updateCoupon(tempCoupon)"
+            @click="updateCoupon(coupon)"
           >
             Submit
           </button>
@@ -107,18 +107,16 @@
 
 <script lang="ts">
 import $ from 'jquery'
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { ICoupon } from 'models/admin'
 import { adminModule } from '../../../../store'
 
 @Component
 export default class CouponModal extends Vue {
-  get tempCoupon() {
-    return adminModule.tempCoupon
-  }
+  @Prop({ required: true }) readonly coupon!: ICoupon
 
-  updateCoupon(tempCoupon: ICoupon) {
-    adminModule.updateCoupon(tempCoupon)
+  updateCoupon(coupon: ICoupon) {
+    adminModule.updateCoupon(coupon)
     ;($('#dashCouponModal') as any).modal('hide')
   }
 }

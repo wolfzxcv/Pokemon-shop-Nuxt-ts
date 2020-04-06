@@ -29,7 +29,7 @@
                 <label for="image">Enter image URL</label>
                 <input
                   id="image"
-                  v-model="tempProduct.imageUrl"
+                  v-model="product.imageUrl"
                   type="text"
                   class="form-control"
                   placeholder="please enter image URL here"
@@ -55,7 +55,7 @@
               <img
                 img="https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=828346ed697837ce808cae68d3ddc3cf&auto=format&fit=crop&w=1350&q=80"
                 class="img-fluid"
-                :src="tempProduct.imageUrl"
+                :src="product.imageUrl"
                 alt
               />
             </div>
@@ -64,7 +64,7 @@
                 <label for="title">Title</label>
                 <input
                   id="title"
-                  v-model="tempProduct.title"
+                  v-model="product.title"
                   type="text"
                   class="form-control"
                   placeholder="Please enter product's name"
@@ -76,7 +76,7 @@
                   <label for="category">Category</label>
                   <input
                     id="category"
-                    v-model="tempProduct.category"
+                    v-model="product.category"
                     type="text"
                     class="form-control"
                     placeholder="Please enter category"
@@ -86,7 +86,7 @@
                   <label for="price">Unit</label>
                   <input
                     id="unit"
-                    v-model="tempProduct.unit"
+                    v-model="product.unit"
                     type="unit"
                     class="form-control"
                     placeholder="Please enter a quantifier"
@@ -99,7 +99,7 @@
                   <label for="origin_price">Was</label>
                   <input
                     id="origin_price"
-                    v-model="tempProduct.origin_price"
+                    v-model="product.origin_price"
                     type="number"
                     class="form-control"
                     placeholder="Please enter original price "
@@ -109,7 +109,7 @@
                   <label for="price">Price</label>
                   <input
                     id="price"
-                    v-model="tempProduct.price"
+                    v-model="product.price"
                     type="number"
                     class="form-control"
                     placeholder="Please enter current price"
@@ -122,7 +122,7 @@
                 <label for="description">Description</label>
                 <textarea
                   id="description"
-                  v-model="tempProduct.description"
+                  v-model="product.description"
                   type="text"
                   class="form-control"
                   placeholder="Please enter description"
@@ -132,7 +132,7 @@
                 <label for="content">Detail</label>
                 <textarea
                   id="content"
-                  v-model="tempProduct.content"
+                  v-model="product.content"
                   type="text"
                   class="form-control"
                   placeholder="Please enter content of the product"
@@ -142,7 +142,7 @@
                 <div class="form-check">
                   <input
                     id="is_enabled"
-                    v-model="tempProduct.is_enabled"
+                    v-model="product.is_enabled"
                     class="form-check-input"
                     type="checkbox"
                     :true-value="1"
@@ -167,7 +167,7 @@
           <button
             type="button"
             class="btn btn-outline-primary"
-            @click="updateProduct(tempProduct)"
+            @click="updateProduct(product)"
           >
             Submit
           </button>
@@ -179,22 +179,20 @@
 
 <script lang="ts">
 import $ from 'jquery'
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { IProduct } from 'models/product'
 import { adminModule } from '../../../../store'
 
 @Component
 export default class ProductModal extends Vue {
-  get tempProduct() {
-    return adminModule.tempProduct
-  }
+  @Prop({ required: true }) readonly product!: IProduct
 
   get fileIsUploading() {
     return adminModule.fileIsUploading
   }
 
-  updateProduct(tempProduct: IProduct) {
-    adminModule.updateProduct(tempProduct)
+  updateProduct(product: IProduct) {
+    adminModule.updateProduct(product)
     ;($('#dashProductModal') as any).modal('hide')
   }
 

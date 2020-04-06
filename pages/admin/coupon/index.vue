@@ -19,17 +19,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="x in coupons" :key="x.id">
-          <td>{{ x.title }}</td>
-          <td>{{ x.code }}</td>
-          <td>{{ x.percent }}</td>
+        <tr v-for="coupon in coupons" :key="coupon.id">
+          <td>{{ coupon.title }}</td>
+          <td>{{ coupon.code }}</td>
+          <td>{{ coupon.percent }}</td>
           <td>
             {{
-              new Date(x.due_date * 1000).toLocaleDateString('en-GB')
+              new Date(coupon.due_date * 1000).toLocaleDateString(
+                'en-GB'
+              )
             }}
           </td>
           <td>
-            <span v-if="x.is_enabled" class="text-success">
+            <span v-if="coupon.is_enabled" class="text-success">
               enabled
             </span>
             <span v-else>disabled</span>
@@ -37,7 +39,7 @@
           <td>
             <button
               class="btn btn-outline-primary btn-sm"
-              @click="openCouponModal(false, x)"
+              @click="openCouponModal(false, coupon)"
             >
               Edit
             </button>
@@ -45,7 +47,7 @@
           <td>
             <button
               class="btn btn-outline-danger btn-sm"
-              @click="openDeleteCouponModal(x)"
+              @click="openDeleteCouponModal(coupon)"
             >
               Delete
             </button>
@@ -56,7 +58,7 @@
 
     <Pagination :pages="pagination" @emitPages="getCoupons" />
 
-    <CouponModal />
+    <CouponModal :coupon="localCoupon" />
 
     <DelCouponModal />
   </div>
@@ -92,14 +94,6 @@ export default class AdminCoupon extends Vue {
     return loadingModule.isLoading
   }
 
-  get isNewCoupon() {
-    return adminModule.isNewCoupon
-  }
-
-  get tempCoupon() {
-    return adminModule.tempCoupon
-  }
-
   get coupons() {
     return adminModule.coupons
   }
@@ -116,6 +110,15 @@ export default class AdminCoupon extends Vue {
     adminModule.getCoupons(newPage)
   }
 
+  localCoupon: ICoupon = {
+    code: '',
+    due_date: '',
+    id: '',
+    is_enabled: 0,
+    percent: '',
+    title: ''
+  }
+
   openCouponModal(isNewCoupon: boolean, item: ICoupon) {
     if (isNewCoupon) {
       const newTempCoupon: ICoupon = {
@@ -126,11 +129,10 @@ export default class AdminCoupon extends Vue {
         percent: '',
         title: ''
       }
-      adminModule.setTempCoupon(newTempCoupon)
-      adminModule.setIsNewCoupon(true)
+
+      this.localCoupon = newTempCoupon
     } else {
-      adminModule.setTempCoupon(item)
-      adminModule.setIsNewCoupon(false)
+      this.localCoupon = { ...item }
     }
     ;($('#dashCouponModal') as any).modal('show')
   }

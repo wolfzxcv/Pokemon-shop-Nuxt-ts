@@ -20,13 +20,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="x in products" :key="x.id">
-          <td>{{ x.category }}</td>
-          <td>{{ x.title }}</td>
-          <td class="text-right">{{ x.origin_price | currency }}</td>
-          <td class="text-right">{{ x.price | currency }}</td>
+        <tr v-for="product in products" :key="product.id">
+          <td>{{ product.category }}</td>
+          <td>{{ product.title }}</td>
+          <td class="text-right">
+            {{ product.origin_price | currency }}
+          </td>
+          <td class="text-right">{{ product.price | currency }}</td>
           <td>
-            <span v-if="x.is_enabled" class="text-success">
+            <span v-if="product.is_enabled" class="text-success">
               enabled
             </span>
             <span v-else>disabled</span>
@@ -34,7 +36,7 @@
           <td>
             <button
               class="btn btn-outline-primary btn-sm"
-              @click="openProductModal(false, x)"
+              @click="openProductModal(false, product)"
             >
               Edit
             </button>
@@ -42,7 +44,7 @@
           <td>
             <button
               class="btn btn-outline-danger btn-sm"
-              @click="openDeleteProductModal(x)"
+              @click="openDeleteProductModal(product)"
             >
               Delete
             </button>
@@ -53,7 +55,7 @@
 
     <Pagination :pages="pagination" @emitPages="adminGetProducts" />
 
-    <ProductModal />
+    <ProductModal :product="localProduct" />
 
     <DeleteProductModal />
   </div>
@@ -89,14 +91,6 @@ export default class AdminProduct extends Vue {
     return loadingModule.isLoading
   }
 
-  get isNewProduct() {
-    return adminModule.isNewProduct
-  }
-
-  get tempProduct() {
-    return adminModule.tempProduct
-  }
-
   get products() {
     return adminModule.adminProducts
   }
@@ -111,6 +105,20 @@ export default class AdminProduct extends Vue {
 
   adminGetProducts(newPage: number) {
     adminModule.adminGetProducts(newPage)
+  }
+
+  localProduct: IProduct = {
+    category: '',
+    content: '',
+    description: '',
+    id: '',
+    imageUrl: '',
+    is_enabled: 1,
+    num: 1,
+    origin_price: '',
+    price: '',
+    title: '',
+    unit: ''
   }
 
   openProductModal(isNewProduct: boolean, item: IProduct) {
@@ -128,11 +136,9 @@ export default class AdminProduct extends Vue {
         title: '',
         unit: ''
       }
-      adminModule.setTempProduct(newTempProduct)
-      adminModule.setIsNewProduct(true)
+      this.localProduct = newTempProduct
     } else {
-      adminModule.setTempProduct(item)
-      adminModule.setIsNewProduct(false)
+      this.localProduct = { ...item }
     }
     ;($('#dashProductModal') as any).modal('show')
   }

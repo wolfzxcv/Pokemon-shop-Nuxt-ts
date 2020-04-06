@@ -19,7 +19,6 @@ import { alertModule, loadingModule, paginationModule } from './index'
 
 @Module({ name: 'admin', namespaced: true, stateFactory: true })
 export default class Admin extends VuexModule {
-  isNewCoupon: boolean = false
   tempCoupon: ICoupon = {
     code: '',
     due_date: '',
@@ -31,7 +30,6 @@ export default class Admin extends VuexModule {
 
   coupons: ICoupon[] = []
   adminOrders: IAdminOrders[] = []
-  isNewProduct: boolean = false
   tempProduct: IProduct = {
     category: '',
     content: '',
@@ -50,18 +48,8 @@ export default class Admin extends VuexModule {
   fileIsUploading: boolean = false
 
   @Mutation
-  setIsNewCoupon(isNewCoupon: boolean) {
-    this.isNewCoupon = isNewCoupon
-  }
-
-  @Mutation
   setTempCoupon(item: ICoupon) {
     this.tempCoupon = item
-  }
-
-  @Mutation
-  setIsNewProduct(isNewProduct: boolean) {
-    this.isNewProduct = isNewProduct
   }
 
   @Mutation
@@ -124,7 +112,7 @@ export default class Admin extends VuexModule {
     loadingModule.setLoading(true)
     let api
     let res
-    if (this.isNewCoupon === false) {
+    if (tempCoupon.id) {
       api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/coupon/${tempCoupon.id}`
       res = await axios.put<ICommonRes>(api, {
         data: tempCoupon
@@ -137,7 +125,7 @@ export default class Admin extends VuexModule {
     }
     const msg = res.data.message
     alertModule.pushMessage({ message: msg })
-    console.log('admin/updateCoupon', res.data)
+    console.log('admin/updateCoupon')
     this.getCoupons()
   }
 
@@ -178,7 +166,7 @@ export default class Admin extends VuexModule {
     loadingModule.setLoading(true)
     let api
     let res
-    if (this.isNewProduct === false) {
+    if (tempProduct.id) {
       api = `${process.env.VUE_APP_PATH}/api/${process.env.VUE_APP_CUSTOM}/admin/product/${tempProduct.id}`
       res = await axios.put<ICommonRes>(api, {
         data: tempProduct
@@ -192,7 +180,7 @@ export default class Admin extends VuexModule {
 
     const msg = res.data.message
     alertModule.pushMessage({ message: msg })
-    console.log('admin/updateProduct', res.data)
+    console.log('admin/updateProduct')
     this.adminGetProducts()
   }
 
