@@ -195,9 +195,10 @@ export default class ProductModal extends Vue {
     ;($('#dashProductModal') as any).modal('hide')
   }
 
-  uploadFile(e: any) {
+  async uploadFile(e: any) {
     const uploadedFile = (e.target as HTMLInputElement).files![0]
-    adminModule.uploadFile(uploadedFile)
+    await adminModule.uploadFile(uploadedFile)
+    this.product.imageUrl = adminModule.imageUrl
   }
 }
 </script>

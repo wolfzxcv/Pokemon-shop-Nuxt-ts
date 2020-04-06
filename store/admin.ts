@@ -19,33 +19,12 @@ import { alertModule, loadingModule, paginationModule } from './index'
 
 @Module({ name: 'admin', namespaced: true, stateFactory: true })
 export default class Admin extends VuexModule {
-  tempCoupon: ICoupon = {
-    code: '',
-    due_date: '',
-    id: '',
-    is_enabled: 0,
-    percent: '',
-    title: ''
-  }
-
   coupons: ICoupon[] = []
   adminOrders: IAdminOrders[] = []
-  tempProduct: IProduct = {
-    category: '',
-    content: '',
-    description: '',
-    id: '',
-    imageUrl: '',
-    is_enabled: 1,
-    num: 1,
-    origin_price: '',
-    price: '',
-    title: '',
-    unit: ''
-  }
-
   adminProducts: IProduct[] = []
   fileIsUploading: boolean = false
+  needUpdateImageUrl: boolean = false
+  imageUrl: string = ''
 
   @Mutation
   setCoupons(data: getCouponsRes) {
@@ -71,14 +50,14 @@ export default class Admin extends VuexModule {
     }
   }
 
-  // @Mutation
-  // setImageUrl(url: string) {
-  //   this.tempProduct.imageUrl = url
-  // }
-
   @Mutation
   setFileIsUploading(isUploading: boolean) {
     this.fileIsUploading = isUploading
+  }
+
+  @Mutation
+  setImageUrl(url: string) {
+    this.imageUrl = url
   }
 
   @Action
@@ -192,16 +171,15 @@ export default class Admin extends VuexModule {
     })
 
     if (res.data.success) {
-      console.log('upload success, url= ', res.data.imageUrl)
-      // this.setImageUrl(res.data.imageUrl as string)
-      alertModule.pushMessage({ message: 'Upload success' })
+      alertModule.pushMessage({ message: '圖片上傳成功' })
     } else {
       alertModule.pushMessage({
-        message: 'Upload failed',
+        message: '圖片上傳失敗',
         status: 'danger'
       })
     }
-    console.log('admin/uploadFile', res.data)
+    this.setImageUrl(res.data.imageUrl!)
+    console.log('admin/uploadFile')
     this.setFileIsUploading(false)
   }
 }

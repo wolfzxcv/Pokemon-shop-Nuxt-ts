@@ -2,9 +2,7 @@
   <div>
     <loading :active.sync="isLoading" />
     <div class="text-right mt-4">
-      <button class="btn btn-primary" @click="openProductModal(true)">
-        Add New Product
-      </button>
+      <button class="btn btn-primary" @click="openProductModal(true)">Add New Product</button>
     </div>
 
     <table class="table mt-4">
@@ -23,31 +21,23 @@
         <tr v-for="product in products" :key="product.id">
           <td>{{ product.category }}</td>
           <td>{{ product.title }}</td>
-          <td class="text-right">
-            {{ product.origin_price | currency }}
-          </td>
+          <td class="text-right">{{ product.origin_price | currency }}</td>
           <td class="text-right">{{ product.price | currency }}</td>
           <td>
-            <span v-if="product.is_enabled" class="text-success">
-              enabled
-            </span>
+            <span v-if="product.is_enabled" class="text-success">enabled</span>
             <span v-else>disabled</span>
           </td>
           <td>
             <button
               class="btn btn-outline-primary btn-sm"
               @click="openProductModal(false, product)"
-            >
-              Edit
-            </button>
+            >Edit</button>
           </td>
           <td>
             <button
               class="btn btn-outline-danger btn-sm"
               @click="openDeleteProductModal(product)"
-            >
-              Delete
-            </button>
+            >Delete</button>
           </td>
         </tr>
       </tbody>
